@@ -12,19 +12,20 @@ from coin import Coin
 
 class Game:
     def __init__(self):
-        self.width = 128*2
-        self.height = 128
+        self.width = 64*4
+        self.height = 64*2
 
         pyxel.init(self.width, self.height) 
 
         pyxel.load("assets.pyxres")  # loads sprites and map
         
         self.player = Player(
-            img_bank=0, 
-            u=24, 
-            w=0, 
-            width=8, 
-            height=8)
+            img_bank = 0, 
+            editX = 24, 
+            editY = 0, 
+            width = 8, 
+            height = 8,
+            scale = 1)
         
         self.coin_list = []
 
@@ -42,28 +43,30 @@ class Game:
                 tile = helpers.get_tile(x, y)
 
                 if tile == helpers.PLAYER_TILE:
-                    self.player.set_xy(x * 8, y * 8)   
+                    self.player.set_pos(x * 8, y * 8)   
 
                     for yi in range(y, y + (self.player.height // 8)):
                         for xi in range(x, x + (self.player.width // 8)):
                             pyxel.tilemaps[0].pset(xi, yi, helpers.TRANSPARENT_TILE)
  
                 if tile == helpers.COIN_TILE:
-                    coin = Coin(
-                        img_bank=0, 
-                        u=32, 
-                        w=0, 
-                        width=8, 
-                        height=8,
-                        scale = .5
-                    )
 
-                    coin.set_xy(x * 8, y * 8)              
+                    coin = Coin(
+                        img_bank = 0, 
+                        editX = 32, 
+                        editY = 0, 
+                        width = 8, 
+                        height = 8,
+                        scale = 0.5)
+
+                    coin.set_pos(x * 8, y * 8)              
                     self.coin_list.append(coin)
                 
                     pyxel.tilemaps[0].pset(x, y, helpers.TRANSPARENT_TILE) 
 
     def draw(self):
+        '''Handles what is drawn on the screen'''
+
         pyxel.cls(0)    # clears screen
 
         if self.scene == "start":

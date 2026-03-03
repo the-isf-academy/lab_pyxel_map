@@ -1,8 +1,11 @@
 from sprite import Sprite
 
+
 class Coin(Sprite):
-    def __init__(self, img_bank, u, w, width, height, scale = 1):
-        super().__init__(img_bank, u, w, width, height, scale)
+    def __init__(self, img_bank, editX, editY, width, height, scale):
+        super().__init__(img_bank, editX, editY, width, height,scale)
+
+        self.speed = 2
 
         self.active = True
 

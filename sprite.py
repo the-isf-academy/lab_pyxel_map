@@ -2,32 +2,32 @@ import pyxel
 import helpers
 
 class Sprite:
-    def __init__(self, img_bank, u, w, width, height, scale = 1):
+    def __init__(self, img_bank, editX, editY, width, height, scale = 1):
         self.img_bank = img_bank
         self.width = width
         self.height = height
-        self.u = u
-        self.w = w
+        self.editX = editX
+        self.editY = editY
         self.scale = scale
-        self.x = 0
-        self.y = 0
+        self.posX = 0
+        self.posY = 0
 
     
-    def set_xy(self, x, y):
+    def set_pos(self, x, y):
         '''Set x,y position'''
 
-        self.x = x
-        self.y = y
+        self.posX = x
+        self.posY = y
 
     def draw(self):
         '''Draw Sprite at current location'''
 
         pyxel.blt(
-            self.x, 
-            self.y, 
+            self.posX, 
+            self.posY, 
             self.img_bank, 
-            self.u, 
-            self.w, 
+            self.editX, 
+            self.editY, 
             self.width, 
             self.height, 
             colkey=helpers.COLKEY,
@@ -54,14 +54,9 @@ class Sprite:
         '''Check is self Sprite collides with another Sprite'''
 
         return (
-            self.x < other_sprite.x + other_sprite.width and
-            self.x + self.width > other_sprite.x and
-            self.y < other_sprite.y + other_sprite.height and
-            self.y + self.height > other_sprite.y
+            self.posX < other_sprite.posX + other_sprite.width and
+            self.posX + self.width > other_sprite.posX and
+            self.posY < other_sprite.posY + other_sprite.height and
+            self.posY + self.height > other_sprite.posY
         )
-    
-
-
-
-
 

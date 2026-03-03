@@ -1,6 +1,6 @@
 [tool.poetry]
 package-mode = false
-name = "retro-testing"
+name = "lab-pyxel-map"
 version = "0.1.0"
 description = ""
 authors = ["emma <eqbrown@isf.edu.hk>", "britte <bgenzlinger@isf.edu.hk>"]

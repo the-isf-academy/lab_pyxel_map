@@ -3,33 +3,31 @@ import helpers
 from sprite import Sprite
 
 class Player(Sprite):
-    def __init__(self, img_bank, u, w, width, height, scale = 1):
-        super().__init__(img_bank, u, w, width, height), scale
-
-        self.x = 0
-        self.y = 0
+    def __init__(self, img_bank, editX, editY, width, height, scale):
+        super().__init__(img_bank, editX, editY, width, height,scale)
 
         self.speed = 2
 
     def update(self):
-        original_x = self.x
-        original_y = self.y
+        original_x = self.posX
+        original_y = self.posY
 
         if pyxel.btn(pyxel.KEY_LEFT):
-            self.x -= self.speed
+            self.posX -= self.speed
 
         elif pyxel.btn(pyxel.KEY_RIGHT):
-            self.x += self.speed
-        
+            self.posX += self.speed
+
         elif pyxel.btn(pyxel.KEY_UP):
-            self.y -= self.speed
+            self.posY -= self.speed
         
         elif pyxel.btn(pyxel.KEY_DOWN):
-            self.y += self.speed
+            self.posY += self.speed
 
-        if self.is_colliding(self.x, self.y, helpers.WALL_TILE):
-            self.set_xy(original_x,original_y)
+        if self.is_colliding(self.posX, self.posY, helpers.WALL_TILE):
+            self.set_pos(original_x,original_y)
+        
 
-
+       
 
 
