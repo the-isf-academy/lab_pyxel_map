@@ -78,13 +78,15 @@ class Game:
 
     def draw_map(self, mapX, mapY):
         """Handles how the map is drawn"""
+        """mapX represents the x coordinate from the map editor"""
+        """mapY represents the y coordinate from the map editor"""
 
         pyxel.bltm(
-            x= mapX, 
-            y = mapY, 
+            x= 0, 
+            y = 0, 
             tm = 0, 
-            u = 0 , 
-            v = 0, 
+            u = mapX*8, 
+            v = mapY*8, 
             w = self.width, 
             h = self.height, 
             colkey=helpers.COLKEY)
