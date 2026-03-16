@@ -29,6 +29,8 @@ class Game:
         
         self.coin_list = []
 
+        self.y_offset = 0
+
         self.scene = "start_screen" # sets the starting scene
 
         self.setup_map_sprites()
@@ -38,8 +40,8 @@ class Game:
     def setup_map_sprites(self):
         '''Sets up Player and Coin Sprites based on the map'''
 
-        for y in range(pyxel.tilemaps[0].height):
-            for x in range(pyxel.tilemaps[0].width):
+        for y in range(self.height//8):
+            for x in range(self.width//8):
 
                 tile = pyxel.tilemaps[0].pget(x, y)
 
@@ -128,7 +130,7 @@ class Game:
     def update(self):
         '''Called every frame of the game'''
   
-        self.player.movement()
+        self.player.movement(self.y_offset)
 
         for coin in self.coin_list:
             if self.player.collides_with(coin) and coin.active == True:
