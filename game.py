@@ -40,9 +40,7 @@ class Game:
     def setup_map_sprites(self):
         '''Sets up Player and Coin Sprites based on the map'''
 
-        self.coin_list = []
-
-        for y in range(self.y_offset, self.y_offset + self.height//8):
+        for y in range(self.height//8):
             for x in range(self.width//8):
 
                 tile = pyxel.tilemaps[0].pget(x, y)
@@ -64,7 +62,7 @@ class Game:
                         height = 8,
                         scale = 0.5)
 
-                    coin.set_pos(x * 8, (y - self.y_offset) * 8)              
+                    coin.set_pos(x * 8, y * 8)              
                     self.coin_list.append(coin)
                 
                     pyxel.tilemaps[0].pset(x, y, helpers.TRANSPARENT_TILE) 
