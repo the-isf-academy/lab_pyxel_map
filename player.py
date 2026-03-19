@@ -34,7 +34,7 @@ class Player:
             colkey=helpers.COLKEY,
             scale = self.scale)
 
-    def movement(self, y_offset):
+    def movement(self, tile_map):
         original_x = self.posX
         original_y = self.posY
 
@@ -51,10 +51,10 @@ class Player:
             self.posY += self.speed
 
         # prevent it from moving into wall tiles
-        if self.is_colliding(self.posX, self.posY, helpers.WALL_TILE_POSITIONS, y_offset):
+        if self.is_colliding(self.posX, self.posY, helpers.WALL_TILE_POSITIONS, tile_map):
             self.set_pos(original_x,original_y)
 
-    def is_colliding(self, x, y, tiles, y_offset):
+    def is_colliding(self, x, y, tiles, tile_map):
         '''Checks if Player is colliding with a specific tile'''
 
         # Calculate the tile range based on the sprite's width and height
@@ -66,7 +66,7 @@ class Player:
         # Check for collisions within the tiles range
         for tileY in range(y1, y2 + 1):
             for tileX in range(x1, x2 + 1):
-                if pyxel.tilemaps[0].pget(tileX, tileY + y_offset) in tiles:
+                if pyxel.tilemaps[tile_map].pget(tileX, tileY) in tiles:
                     return True
 
         return False

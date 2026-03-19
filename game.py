@@ -29,9 +29,9 @@ class Game:
         
         self.coin_list = []
 
-        self.y_offset = 0 # use this to draw multiple levels or stages
-
         self.scene = "start_screen" # sets the starting scene
+
+        self.tilemap = 0
 
         self.setup_map_sprites()
 
@@ -43,16 +43,14 @@ class Game:
         for y in range(self.height//8):
             for x in range(self.width//8):
 
-                tile = pyxel.tilemaps[0].pget(x, y)
-
-                screen_y = (y - self.y_offset) * 8
+                tile = pyxel.tilemaps[self.tilemap].pget(x, y)
 
                 if tile == helpers.PLAYER_TILE:
-                    self.player.set_pos(x * 8, screen_y)   
+                    self.player.set_pos(x * 8, y*8)   
 
                     for tileY in range(y, y + (self.player.height // 8)):
                         for tileX in range(x, x + (self.player.width // 8)):
-                            pyxel.tilemaps[0].pset(tileX, tileY, helpers.TRANSPARENT_TILE)
+                            pyxel.tilemaps[self.tilemap].pset(tileX, tileY, helpers.TRANSPARENT_TILE)
  
                 if tile == helpers.COIN_TILE:
 
@@ -64,10 +62,10 @@ class Game:
                         height = 8,
                         scale = 0.5)
 
-                    coin.set_pos(x * 8, screen_y)              
+                    coin.set_pos(x * 8, y*8)              
                     self.coin_list.append(coin)
                 
-                    pyxel.tilemaps[0].pset(x, y, helpers.TRANSPARENT_TILE) 
+                    pyxel.tilemaps[self.tilemap].pset(x, y, helpers.TRANSPARENT_TILE) 
 
     def draw(self):
         '''Handles what is drawn on the screen'''
@@ -88,7 +86,7 @@ class Game:
         pyxel.bltm(
             x= 0, 
             y = 0, 
-            tm = 0, 
+            tm = self.tilemap, 
             u = mapX*8, 
             v = mapY*8, 
             w = self.width, 
@@ -122,7 +120,7 @@ class Game:
         # draw background color
         pyxel.rect(x=0, y=0, w=self.width, h=self.height, col=helpers.NAVY)
     
-        self.draw_map(0, self.y_offset)
+        self.draw_map(0, 0)
 
         self.player.draw()
 
@@ -132,7 +130,7 @@ class Game:
     def update(self):
         '''Called every frame of the game'''
   
-        self.player.movement(self.y_offset)
+        self.player.movement(self.tilemap)
 
         for coin in self.coin_list:
             if self.player.collides_with(coin) and coin.active == True:
